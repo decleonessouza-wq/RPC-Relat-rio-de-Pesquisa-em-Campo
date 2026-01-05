@@ -2,7 +2,7 @@
 <html lang="pt-BR">
 <head>
   <meta charset="UTF-8" />
-  <title>RPC – Pesquisa de Campo</title>
+  <title>RPC – Pesquisa com Produtor Rural</title>
 
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <meta name="theme-color" content="#2f7d32" />
@@ -19,7 +19,7 @@
       font-family: Arial, sans-serif;
       background: #f4f7f5;
       margin: 0;
-      padding: 12px;
+      padding: 14px;
       color: #2e2e2e;
     }
 
@@ -27,20 +27,36 @@
       text-align: center;
       color: #2f7d32;
       font-size: 22px;
+      margin-bottom: 6px;
+    }
+
+    .subtitle {
+      text-align: center;
+      font-size: 14px;
+      color: #555;
+      margin-bottom: 20px;
     }
 
     h2 {
-      margin-top: 24px;
+      margin-top: 28px;
       font-size: 17px;
       color: #1b5e20;
       border-bottom: 2px solid #c8e6c9;
       padding-bottom: 4px;
     }
 
+    .desc {
+      font-size: 14px;
+      color: #555;
+      margin-top: 6px;
+      margin-bottom: 10px;
+    }
+
     label {
       margin-top: 14px;
       font-weight: bold;
       display: block;
+      font-size: 14px;
     }
 
     input, select, textarea {
@@ -52,13 +68,13 @@
       font-size: 15px;
     }
 
-    textarea { min-height: 80px; }
+    textarea { min-height: 90px; }
 
     .buttons {
       display: grid;
       grid-template-columns: 1fr;
       gap: 10px;
-      margin-top: 20px;
+      margin-top: 26px;
     }
 
     button {
@@ -86,42 +102,153 @@
 <body>
 
 <h1>📋 RPC – Pesquisa com Produtor Rural</h1>
+<div class="subtitle">
+  Levantamento de necessidades, dificuldades e oportunidades no campo
+</div>
 
 <form id="rpcForm">
 
-  <h2>1. Identificação</h2>
-  <label>Nome</label><input name="Nome">
-  <label>Idade</label><input name="Idade">
-  <label>Município</label><input name="Municipio">
-  <label>Produção</label><input name="Producao">
-  <label>Área</label><input name="Area">
+  <!-- 1 -->
+  <h2>1. Identificação do Produtor</h2>
+  <div class="desc">
+    Informações básicas para contextualizar o perfil do produtor rural entrevistado.
+  </div>
 
-  <h2>2. Tecnologia</h2>
-  <label>Celular</label><input name="Celular">
-  <label>Internet</label><input name="Internet">
+  <label>Nome do produtor</label>
+  <input name="Nome">
 
-  <h2>3. Registros atuais</h2>
-  <textarea name="RegistroAtual"></textarea>
+  <label>Idade</label>
+  <input type="number" name="Idade">
 
-  <h2>4. Custos / Crédito</h2>
-  <textarea name="Credito"></textarea>
+  <label>Município / UF</label>
+  <input name="Municipio">
 
-  <h2>5. Dificuldades</h2>
-  <textarea name="Dificuldades"></textarea>
+  <label>Principal atividade produtiva</label>
+  <input name="Producao" placeholder="Ex: milho, leite, hortaliças">
 
-  <h2>6. Relatórios desejados</h2>
-  <textarea name="Relatorios"></textarea>
+  <label>Área aproximada da propriedade (ha)</label>
+  <input name="Area">
 
+  <!-- 2 -->
+  <h2>2. Tecnologia e Conectividade</h2>
+  <div class="desc">
+    Avaliar o nível de acesso e uso de tecnologia no dia a dia da propriedade.
+  </div>
+
+  <label>Possui celular?</label>
+  <select name="Celular">
+    <option value="">Selecione</option>
+    <option>Sim</option>
+    <option>Não</option>
+  </select>
+
+  <label>Tipo de celular</label>
+  <select name="TipoCelular">
+    <option value="">Selecione</option>
+    <option>Smartphone</option>
+    <option>Celular simples</option>
+  </select>
+
+  <label>Acesso à internet na propriedade</label>
+  <select name="Internet">
+    <option value="">Selecione</option>
+    <option>Não possui</option>
+    <option>Internet móvel</option>
+    <option>Internet fixa</option>
+  </select>
+
+  <!-- 3 -->
+  <h2>3. Registros e Controles Atuais</h2>
+  <div class="desc">
+    Como o produtor registra informações produtivas, financeiras ou operacionais.
+  </div>
+
+  <label>Como são feitos os registros hoje?</label>
+  <textarea name="RegistrosAtuais"
+    placeholder="Ex: caderno, memória, planilha, aplicativo, não registra"></textarea>
+
+  <!-- 4 -->
+  <h2>4. Custos, Crédito e Gestão Financeira</h2>
+  <div class="desc">
+    Entendimento sobre controle de custos e acesso a crédito rural.
+  </div>
+
+  <label>Possui controle de custos da produção?</label>
+  <select name="ControleCustos">
+    <option value="">Selecione</option>
+    <option>Sim</option>
+    <option>Não</option>
+    <option>Parcial</option>
+  </select>
+
+  <label>Já acessou crédito rural?</label>
+  <select name="Credito">
+    <option value="">Selecione</option>
+    <option>Sim</option>
+    <option>Não</option>
+  </select>
+
+  <label>Observações sobre crédito e custos</label>
+  <textarea name="ObsCredito"></textarea>
+
+  <!-- 5 -->
+  <h2>5. Principais Dificuldades</h2>
+  <div class="desc">
+    Levantamento das maiores dores enfrentadas pelo produtor no dia a dia.
+  </div>
+
+  <textarea name="Dificuldades"
+    placeholder="Ex: custos altos, falta de assistência técnica, clima, mercado"></textarea>
+
+  <!-- 6 -->
+  <h2>6. Relatórios e Informações Desejadas</h2>
+  <div class="desc">
+    Que tipos de relatórios ou informações ajudariam na tomada de decisão.
+  </div>
+
+  <textarea name="Relatorios"
+    placeholder="Ex: custo por safra, lucro, produtividade, estoque"></textarea>
+
+  <!-- 7 -->
   <h2>7. Educação Digital</h2>
-  <textarea name="Educacao"></textarea>
+  <div class="desc">
+    Avaliação do interesse e capacidade de aprendizado em ferramentas digitais.
+  </div>
 
-  <h2>8. Validação</h2>
-  <textarea name="Validacao"></textarea>
+  <label>Tem interesse em aprender a usar aplicativos de gestão?</label>
+  <select name="EducacaoDigital">
+    <option value="">Selecione</option>
+    <option>Sim</option>
+    <option>Não</option>
+    <option>Talvez</option>
+  </select>
 
-  <h2>9. Prioridades</h2>
+  <textarea name="ObsEducacao"
+    placeholder="Observações sobre dificuldades ou interesse"></textarea>
+
+  <!-- 8 -->
+  <h2>8. Validação da Solução</h2>
+  <div class="desc">
+    Percepção do produtor sobre o uso de uma solução digital simples.
+  </div>
+
+  <textarea name="Validacao"
+    placeholder="O produtor usaria um aplicativo simples para controle da propriedade?"></textarea>
+
+  <!-- 9 -->
+  <h2>9. Prioridades do Produtor</h2>
+  <div class="desc">
+    O que é mais importante resolver primeiro na visão do produtor.
+  </div>
+
   <textarea name="Prioridades"></textarea>
 
+  <!-- 10 -->
   <h2>10. Conclusão do Pesquisador</h2>
+  <div class="desc">
+    Análise final do entrevistador com base na conversa.
+  </div>
+
   <textarea name="Conclusao"></textarea>
 
   <div class="buttons">
@@ -139,11 +266,12 @@
 <script>
   const form = document.getElementById("rpcForm");
 
-  // Load saved
   window.onload = () => {
     const dados = JSON.parse(localStorage.getItem("rpc"));
     if (dados) {
-      Object.keys(dados).forEach(k => form[k].value = dados[k]);
+      Object.keys(dados).forEach(k => {
+        if (form[k]) form[k].value = dados[k];
+      });
     }
   };
 
@@ -151,37 +279,37 @@
     const dados = {};
     [...form.elements].forEach(el => el.name && (dados[el.name] = el.value));
     localStorage.setItem("rpc", JSON.stringify(dados));
-    alert("Salvo no dispositivo.");
+    alert("Dados salvos no dispositivo.");
   }
 
   function gerarPDF() {
     const { jsPDF } = window.jspdf;
     const doc = new jsPDF();
-    let y = 10;
+    let y = 12;
 
-    doc.setFontSize(12);
+    doc.setFontSize(14);
     doc.text("RPC – Pesquisa com Produtor Rural", 10, y);
     y += 10;
 
+    doc.setFontSize(10);
     [...form.elements].forEach(el => {
       if (el.name && el.value) {
-        doc.text(`${el.name}: ${el.value}`, 10, y);
-        y += 8;
-        if (y > 280) { doc.addPage(); y = 10; }
+        doc.text(`${el.previousElementSibling?.innerText || el.name}: ${el.value}`, 10, y);
+        y += 7;
+        if (y > 280) { doc.addPage(); y = 12; }
       }
     });
 
-    doc.save("rpc_produtor.pdf");
+    doc.save("rpc_produtor_rural.pdf");
   }
 
   function limpar() {
-    if (confirm("Apagar tudo?")) {
+    if (confirm("Deseja apagar todos os dados?")) {
       localStorage.removeItem("rpc");
       form.reset();
     }
   }
 
-  // PWA
   if ("serviceWorker" in navigator) {
     navigator.serviceWorker.register("sw.js");
   }
