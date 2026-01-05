@@ -1,0 +1,191 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8" />
+  <title>RPC – Pesquisa de Campo</title>
+
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta name="theme-color" content="#2f7d32" />
+
+  <link rel="manifest" href="manifest.json" />
+
+  <!-- jsPDF -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
+
+  <style>
+    * { box-sizing: border-box; }
+
+    body {
+      font-family: Arial, sans-serif;
+      background: #f4f7f5;
+      margin: 0;
+      padding: 12px;
+      color: #2e2e2e;
+    }
+
+    h1 {
+      text-align: center;
+      color: #2f7d32;
+      font-size: 22px;
+    }
+
+    h2 {
+      margin-top: 24px;
+      font-size: 17px;
+      color: #1b5e20;
+      border-bottom: 2px solid #c8e6c9;
+      padding-bottom: 4px;
+    }
+
+    label {
+      margin-top: 14px;
+      font-weight: bold;
+      display: block;
+    }
+
+    input, select, textarea {
+      width: 100%;
+      padding: 12px;
+      margin-top: 6px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 15px;
+    }
+
+    textarea { min-height: 80px; }
+
+    .buttons {
+      display: grid;
+      grid-template-columns: 1fr;
+      gap: 10px;
+      margin-top: 20px;
+    }
+
+    button {
+      padding: 14px;
+      font-size: 16px;
+      border-radius: 8px;
+      border: none;
+      cursor: pointer;
+      color: white;
+    }
+
+    .save { background: #2f7d32; }
+    .pdf { background: #0277bd; }
+    .clear { background: #c62828; }
+
+    footer {
+      margin-top: 40px;
+      text-align: center;
+      font-size: 13px;
+      color: #777;
+    }
+  </style>
+</head>
+
+<body>
+
+<h1>📋 RPC – Pesquisa com Produtor Rural</h1>
+
+<form id="rpcForm">
+
+  <h2>1. Identificação</h2>
+  <label>Nome</label><input name="Nome">
+  <label>Idade</label><input name="Idade">
+  <label>Município</label><input name="Municipio">
+  <label>Produção</label><input name="Producao">
+  <label>Área</label><input name="Area">
+
+  <h2>2. Tecnologia</h2>
+  <label>Celular</label><input name="Celular">
+  <label>Internet</label><input name="Internet">
+
+  <h2>3. Registros atuais</h2>
+  <textarea name="RegistroAtual"></textarea>
+
+  <h2>4. Custos / Crédito</h2>
+  <textarea name="Credito"></textarea>
+
+  <h2>5. Dificuldades</h2>
+  <textarea name="Dificuldades"></textarea>
+
+  <h2>6. Relatórios desejados</h2>
+  <textarea name="Relatorios"></textarea>
+
+  <h2>7. Educação Digital</h2>
+  <textarea name="Educacao"></textarea>
+
+  <h2>8. Validação</h2>
+  <textarea name="Validacao"></textarea>
+
+  <h2>9. Prioridades</h2>
+  <textarea name="Prioridades"></textarea>
+
+  <h2>10. Conclusão do Pesquisador</h2>
+  <textarea name="Conclusao"></textarea>
+
+  <div class="buttons">
+    <button type="button" class="save" onclick="salvar()">💾 Salvar</button>
+    <button type="button" class="pdf" onclick="gerarPDF()">📄 Gerar PDF</button>
+    <button type="button" class="clear" onclick="limpar()">🗑️ Limpar</button>
+  </div>
+
+</form>
+
+<footer>
+  Funciona offline • Instalável • Agricultura Familiar
+</footer>
+
+<script>
+  const form = document.getElementById("rpcForm");
+
+  // Load saved
+  window.onload = () => {
+    const dados = JSON.parse(localStorage.getItem("rpc"));
+    if (dados) {
+      Object.keys(dados).forEach(k => form[k].value = dados[k]);
+    }
+  };
+
+  function salvar() {
+    const dados = {};
+    [...form.elements].forEach(el => el.name && (dados[el.name] = el.value));
+    localStorage.setItem("rpc", JSON.stringify(dados));
+    alert("Salvo no dispositivo.");
+  }
+
+  function gerarPDF() {
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF();
+    let y = 10;
+
+    doc.setFontSize(12);
+    doc.text("RPC – Pesquisa com Produtor Rural", 10, y);
+    y += 10;
+
+    [...form.elements].forEach(el => {
+      if (el.name && el.value) {
+        doc.text(`${el.name}: ${el.value}`, 10, y);
+        y += 8;
+        if (y > 280) { doc.addPage(); y = 10; }
+      }
+    });
+
+    doc.save("rpc_produtor.pdf");
+  }
+
+  function limpar() {
+    if (confirm("Apagar tudo?")) {
+      localStorage.removeItem("rpc");
+      form.reset();
+    }
+  }
+
+  // PWA
+  if ("serviceWorker" in navigator) {
+    navigator.serviceWorker.register("sw.js");
+  }
+</script>
+
+</body>
+</html>
